@@ -1,0 +1,27 @@
+version: '2'
+services:
+    nginx:
+        build:
+            context: nginx
+        ports:
+            - "8080:80"
+        volumes:
+            - ../www/:/var/www
+        links:
+            - php
+
+    php:
+        build:
+            context: php
+        volumes:
+            - ../www/:/var/www
+        links:
+            - mssql
+
+    mssql:
+        build:
+            context: mssql
+        ports:
+            - "11433:1433"
+        volumes:
+            - ./mssql/data:/var/opt/mssql/data
